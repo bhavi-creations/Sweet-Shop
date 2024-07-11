@@ -18,6 +18,7 @@
     <!-- Custom styles for this template-->
     <linl href="css/sb-admin-2.css" rel="stylesheet">
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
         <style>
             .table-container {
                 display: none;
@@ -78,7 +79,8 @@
 
                                     function updateTable(id) {
                                         tableContainers.forEach(container => container.classList.remove('active'));
-                                        document.querySelectorAll('.table-container').forEach(container => container.classList.remove('active'));
+                                        document.querySelectorAll('.table-container').forEach(container => container
+                                            .classList.remove('active'));
                                         document.getElementById(id + 'Table').classList.add('active');
                                     }
 
