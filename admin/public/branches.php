@@ -1,3 +1,7 @@
+ 
+<?php
+ob_start(); // Start output buffering
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,10 +63,7 @@
                             <div class="col-md-4 col-lg-2 ul_border">
                                 <ul class="ul_style">
                                     <li id="addReport" class="add_staff_list_detils open_table">+ Add Branch</li>
-
                                     <li id="reports" class="staff_list_detils open_table active">Total Branches</li>
-                                    <!-- <li id="totalBranch" class="staff_list_detils open_table">Total Items</li> -->
-
                                 </ul>
 
                                 <script>
@@ -79,98 +80,78 @@
 
                                     function updateTable(id) {
                                         tableContainers.forEach(container => container.classList.remove('active'));
-                                        document.querySelectorAll('.table-container').forEach(container => container
-                                            .classList.remove('active'));
+                                        document.querySelectorAll('.table-container').forEach(container => container.classList.remove('active'));
                                         document.getElementById(id + 'Table').classList.add('active');
                                     }
 
                                     // Initially show the details table
-                                    document.getElementById('detailsTable').classList.add('active');
+                                    document.getElementById('reportsTable').classList.add('active');
                                 </script>
                             </div>
 
-                            <div class="col-md-11   col-lg-9 ul_border">
+                            <div class="col-md-11 col-lg-9 ul_border">
 
+                                <?php
+                                include '..\..\db.connection\db_connection.php';
 
-                                <div id="addReportTable" class="table-container  ">
+                                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                                    if (isset($_POST['branch_area']) && !empty($_POST['branch_area'])) {
+                                        $branch_area = $_POST['branch_area'];
 
+                                        // Insert branch into database
+                                        $sql = "INSERT INTO branches (branch_area) VALUES (?)";
+                                        $stmt = $conn->prepare($sql);
+                                        $stmt->bind_param("s", $branch_area);
+
+                                        if ($stmt->execute()) {
+                                            echo "New branch added successfully";
+                                            header("Location: branches.php");
+                                            exit();
+                                        } else {
+                                            echo "Error: " . $sql . "<br>" . $conn->error;
+                                        }
+
+                                        $stmt->close();
+                                    } else {
+                                        echo "Branch area cannot be empty.";
+                                    }
+                                }
+
+                                ?>
+
+                                <div id="addReportTable" class="table-container">
                                     <div class="container">
                                         <div class="row d-flex flex-row justify-content-between pt-4 pb-3">
                                             <div class="">
-                                                <h6 class="staff_dtls">Add Branch </h6>
+                                                <h6 class="staff_dtls">Add Branch</h6>
                                             </div>
-                                          
                                         </div>
                                     </div>
-
 
                                     <form method="post" enctype="multipart/form-data">
                                         <div class="form-group">
                                             <div class="row">
-
-
-
-
                                                 <div class="col-md-6 mt-5">
-                                                    <label class="control-label mb-2 field_txt"> Upload Image</label>
-                                                    <input type="file" class="form-control field_input_bg" name="address">
-
-                                                </div>
-                                                <div class="col-md-6  mt-5">
-                                                    <label class="control-label mb-2 field_txt">Incharge Name</label>
-                                                    <input type="text" class="form-control field_input_bg" name="age">
-                                                </div>
-                                                
-                                                <div class="col-md-6  mt-5">
-                                                    <label class="control-label mb-2 field_txt">Brance Area</label>
-                                                    <input type="number" class="form-control field_input_bg" name="phone">
-
-
+                                                    <label class="control-label mb-2 field_txt">Branch Area</label>
+                                                    <input type="text" class="form-control field_input_bg" name="branch_area">
                                                 </div>
                                                 <div class="col-md-6 mt-5">
-                                                    <label class="control-label mb-2 field_txt">  No. of staff</label>
-                                                    <input type="text" class="form-control field_input_bg" name="address">
-
-                                                </div>
-                                                <div class="col-md-6  mt-5">
-                                                    <label class="control-label mb-2 field_txt">Monthly Expenses</label>
-                                                    <input type="text" class="form-control field_input_bg" name="age">
-                                                </div>
-                                                <div class="col-md-6  mt-5">
-                                                    <label class="control-label mb-2 field_txt">Phone NO.</label>
-                                                    <input type="Number" class="form-control field_input_bg" name="age">
-                                                </div>
-                                                <div class="col-md-6  mt-5">
-                                                    <label class="control-label mb-2 field_txt">No. of Items</label>
-                                                    <input type="Number" class="form-control field_input_bg" name="age">
-                                                </div>
-                                                <div class="col-md-6 mt-5">
-
-
-                                                    <div class="row last_back_submit  d-flex flex-row justify-content-between  px-3">
+                                                    <div class="row last_back_submit d-flex flex-row justify-content-between px-3">
                                                         <button class="back_btn_staff">Back</button>
-                                                        <button class="submit_btn_staff">Submit</button>
-
+                                                        <button type="submit" class="submit_btn_staff">Submit</button>
                                                     </div>
-
                                                 </div>
-
-
-
                                             </div>
                                         </div>
                                     </form>
                                 </div>
 
                                 <div id="reportsTable" class="table-container active">
-
-
                                     <div class="container">
                                         <div class="row d-flex flex-row justify-content-between pt-4 pb-3">
                                             <div class="">
                                                 <h6 class="staff_dtls">Total Branches</h6>
                                             </div>
-                                             
                                         </div>
                                     </div>
 
@@ -178,90 +159,39 @@
                                         <thead class="table_bg">
                                             <tr>
                                                 <th class="th_names">ID</th>
-                                                <th class="th_names">Incharge Names</th>
                                                 <th class="th_names">Branch Area</th>
-                                                <th class="th_names">Total Staff</th>
-                                                <th class="th_names">  Monthly Expenses</th>
                                                 <th class="th_names">Actions</th>
-
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="tr_hover">
-                                                <td class="td_id_num">1</td>
-                                                <td class="td_id_mob"> 
-                                                 
-                                                    <img src="img/profile (1).png" alt="John Doe" class="td_profile_pic">
-                                                    Ram
-                                                </td>
-                                                <td class="td_id_num">Kakinada </td>
-                                                     
-                                               
-                                                <td class="td_id_mob">50</td>
-                                                <td class="td_id_num">8000</td>
-                                                <td>
-                                                    <button class="edit_icon"><i class="fa-regular fa-pen-to-square"></i></button>
-                                                    <button class="dlt_icon"><i class="fa-regular fa-trash-can"></i></button>
-                                                </td>
-                                            </tr>
-                                            <!-- Add more rows as needed -->
+                                            <?php
+                                            $sql = "SELECT id, branch_area FROM branches";
+                                            $result = $conn->query($sql);
+
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    echo "<tr class='tr_hover'>
+                                                            <td class='td_id_num'>" . $row["id"] . "</td>
+                                                            <td class='td_id_num'>" . $row["branch_area"] . "</td>
+                                                            <td>
+                                                                <button class='edit_icon'><i class='fa-regular fa-pen-to-square'></i></button>
+                                                                <button class='dlt_icon'><i class='fa-regular fa-trash-can'></i></button>
+                                                            </td>
+                                                          </tr>";
+                                                }
+                                            } else {
+                                                echo "<tr><td colspan='3'>No branches found</td></tr>";
+                                            }
+
+                                            $conn->close();
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
-
-                                <!-- <div id="totalBranchTable" class="table-container  ">
-
-
-                                    <div class="container">
-                                        <div class="row d-flex flex-row justify-content-between pt-4 pb-3">
-                                            <div class="">
-                                                <h6 class="staff_dtls">Total Items</h6>
-                                            </div>
-                                            <div class="">
-                                                <h6 class="kkd_brnch">Kakinada Branch
-                                                    <svg class="kkdIcon ml-3" xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" fill="none">
-                                                        <path d="M17.7178 4.96555L10 12.1861L2.28216 4.96555C1.67358 4.33767 1.06501 4.32459 0.456432 4.9263C-0.152144 5.52802 -0.152144 6.11665 0.456432 6.6922L9.08714 14.8546C9.30844 15.1162 9.61272 15.247 10 15.247C10.3873 15.247 10.6916 15.1162 10.9129 14.8546L19.5436 6.6922C20.1521 6.11665 20.1521 5.52802 19.5436 4.9263C18.935 4.32459 18.3264 4.33767 17.7178 4.96555Z" fill="#202224" />
-                                                    </svg>
-                                                </h6>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <table class="table_stf">
-                                        <thead class="table_bg">
-                                            <tr>
-                                                <th class="th_names">ID</th>
-                                                <th class="th_names">Items</th>                                                
-                                                <th class="th_names">Kg's</th>
-                                                <th class="th_names">Actions</th>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="tr_hover">
-                                                <td class="td_id_num">1</td>
-
-                                                <td class="td_id_num">
-                                                    <img src="img/profile (1).png" alt="John Doe" class="td_profile_pic">
-                                                    Kaja        
-                                                </td>
-                                                <td class="td_id_mob">55</td>
-                                                
-                                                <td>
-                                                    <button class="edit_icon"><i class="fa-regular fa-pen-to-square"></i></button>
-                                                    <button class="dlt_icon"><i class="fa-regular fa-trash-can"></i></button>
-                                                </td>
-                                            </tr>
-                                            
-                                        </tbody>
-                                    </table>
-                                </div> -->
-
                             </div>
                         </div>
                     </div>
                 </section>
-
 
                 <!-- Footer -->
                 <footer class="sticky-footer bg-white">
@@ -275,15 +205,13 @@
                         </div>
                     </div>
                 </footer>
-                <!-- End of Footer -->
+
 
             </div>
-            <!-- End of Content Wrapper -->
+
 
         </div>
-        <!-- End of Page Wrapper -->
 
-        <!-- Scroll to Top Button-->
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
