@@ -59,7 +59,7 @@
                             <div class="col-md-4 col-lg-2 ul_border">
                                 <ul class="ul_style">
                                     <li id="addStaff" class="add_staff_list_detils open_table">+ Add Staff</li>
-                                    <li id="addIncharge" class="add_incharge_list_detils open_table">+ Add Incharge</li>
+                                    <!-- <li id="addIncharge" class="add_incharge_list_detils open_table">+ Add Incharge</li> -->
 
                                     <li id="details" class="staff_list_detils open_table active">Staff</li>
                                     <li id="salaries" class="staff_list_detils open_table">Sta - Salaries</li>
@@ -186,7 +186,7 @@
                                     </form>
                                 </div>
 
-                                <div id="addInchargeTable" class="table-container  ">
+                                <!-- <div id="addInchargeTable" class="table-container  ">
                                     <div class="container">
                                         <div class="row d-flex flex-row justify-content-between pt-4 pb-3">
                                             <div class="">
@@ -276,7 +276,7 @@
                                             </div>
                                         </div>
                                     </form>
-                                </div>
+                                </div> -->
 
                                 <div id="detailsTable" class="table-container active">
 
