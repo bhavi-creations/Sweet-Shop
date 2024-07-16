@@ -182,7 +182,7 @@
                                     <div class="container">
                                         <div class="row d-flex flex-row justify-content-between pt-4 pb-3">
                                             <div class="">
-                                                <h6 class="staff_dtls">Stock</h6>
+                                                <h6 class="staff_dtls">Food Stock</h6>
                                             </div>
                                             <div class="">
                                                 <h6 class="kkd_brnch">Kakinada Branch
