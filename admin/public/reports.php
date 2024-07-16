@@ -18,6 +18,8 @@
     <!-- Custom styles for this template-->
     <linl href="css/sb-admin-2.css" rel="stylesheet">
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+
         <style>
             .table-container {
                 display: none;
@@ -231,7 +233,7 @@
                                             <tr>
                                                 <th class="th_names">ID</th>
                                                 <th class="th_names">Branch Area</th>
-                                                <th class="th_names">Incharge names</th>                                                
+                                                <th class="th_names">Incharge names</th>
                                                 <th class="th_names">Actions</th>
 
                                             </tr>
@@ -245,7 +247,7 @@
                                                     <img src="img/profile (1).png" alt="John Doe" class="td_profile_pic">
                                                     John Doe
                                                 </td>
-                                                
+
                                                 <td>
                                                     <button class="edit_icon"><i class="fa-regular fa-pen-to-square"></i></button>
                                                     <button class="dlt_icon"><i class="fa-regular fa-trash-can"></i></button>
